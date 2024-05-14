@@ -1,10 +1,9 @@
 // -*- Bison -*-
 %skeleton "lalr1.cc"
-%defines
-%define namespace "saif"
-%define parser_class_name "saif_parser"
+%require "3.2"
 %language "c++"
-%output "saif.cc"
+%define api.namespace {saif}
+%define api.parser.class {saifParser}
 %parse-param {saif::SaifLexer* lexer}
 %parse-param {saif::SaifDB* db}
 %{
@@ -37,8 +36,8 @@
  *
  */
 
-#include "saif_util.hpp"
-#include "saif_db.hpp"
+#include "SaifUtil.h"
+#include "SaifDB.h"
 
 #define yylex lexer->lexer
 
