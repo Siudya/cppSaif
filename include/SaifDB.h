@@ -31,9 +31,9 @@
 
 #include <gmpxx.h>
 #include <iostream>
-#include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace saif {
@@ -60,7 +60,7 @@ inline std::ostream &operator<<(std::ostream &os, const SaifRecord &rhs) {
 // a signal (single or multi bits)
 class SaifSignal {
   public:
-  std::map<int, std::shared_ptr<SaifSignal>> bits;
+  std::unordered_map<int, std::shared_ptr<SaifSignal>> bits;
   std::shared_ptr<SaifRecord> data;
 
   virtual std::ostream &streamout(std::ostream &) const;
@@ -76,8 +76,8 @@ inline std::ostream &operator<<(std::ostream &os, const SaifSignal &rhs) {
 // instance
 class SaifInstance {
   public:
-  std::map<std::string, std::shared_ptr<SaifSignal>> signals;
-  std::map<std::string, std::shared_ptr<SaifInstance>> instances;
+  std::unordered_map<std::string, std::shared_ptr<SaifSignal>> signals;
+  std::unordered_map<std::string, std::shared_ptr<SaifInstance>> instances;
   std::string module_name;
 
   virtual std::ostream &streamout(std::ostream &, const std::string &,

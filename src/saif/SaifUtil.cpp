@@ -27,10 +27,8 @@
  */
 
 #include "SaifUtil.h"
-#include "saif.hh"
+#include "Saif.tab.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
 #include <gmpxx.h>
 
 using namespace saif;

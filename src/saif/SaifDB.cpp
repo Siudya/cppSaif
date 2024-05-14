@@ -27,7 +27,6 @@
  */
 
 #include "SaifDB.h"
-#include <boost/foreach.hpp>
 
 using std::string;
 
@@ -60,13 +59,12 @@ std::ostream &saif::SaifSignal::streamout(std::ostream &os,
                                           const std::string &sig,
                                           const std::string &dim,
                                           unsigned int indent) const {
-  if (bits.empty()) {
+  if(bits.empty()) {
     os << std::string(indent, ' ') << "(" << sig << dim << std::endl;
     os << std::string(indent, ' ') << "    " << *data << std::endl;
     os << std::string(indent, ' ') << ")" << std::endl;
   } else {
-    typedef std::pair<const int, boost::shared_ptr<SaifSignal>> signal_type;
-    BOOST_FOREACH (signal_type it, bits) {
+    for(const auto &it : bits) {
       mpz_class m = it.first;
       std::string m_dim = dim + "[" + m.get_str() + "]";
       it.second->streamout(os, sig, m_dim, indent);
@@ -84,25 +82,21 @@ std::ostream &saif::SaifInstance::streamout(std::ostream &os,
                                             unsigned int indent) const {
   os << std::string(indent, ' ') << "(INSTANCE ";
 
-  if (module_name.empty())
+  if(module_name.empty())
     os << name << std::endl;
   else
     os << "\"" << module_name << "\" " << name << std::endl;
 
-  if (!signals.empty()) {
+  if(!signals.empty()) {
     os << std::string(indent + 2, ' ') << "(NET" << std::endl;
-    typedef std::pair<const string &, boost::shared_ptr<SaifSignal>>
-        signal_type;
-    BOOST_FOREACH (signal_type it, signals) {
+    for(const auto &it : signals) {
       it.second->streamout(os, it.first, "", indent + 4);
     }
     os << std::string(indent + 2, ' ') << ")" << std::endl;
   }
 
-  if (!instances.empty()) {
-    typedef std::pair<const string &, boost::shared_ptr<SaifInstance>>
-        instance_type;
-    BOOST_FOREACH (instance_type it, instances) {
+  if(!instances.empty()) {
+    for(const auto &it : instances) {
       it.second->streamout(os, it.first, indent + 2);
     }
   }

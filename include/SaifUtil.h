@@ -40,27 +40,27 @@
 namespace saif {
 
 struct saif_token_type {
-  std::string tStr;                          // string
-  std::string tVar;                          // variable
-  mpz_class tNum;                            // number
-  std::pair<unsigned int, mpz_class> tAct;   // activity
-  std::shared_ptr<saif::SaifRecord> tRecord; // a saif record
-  std::pair<std::string, std::shared_ptr<saif::SaifSignal>> tSig; // signal
-  std::map<std::string, std::shared_ptr<saif::SaifSignal>>
-      tSigList;                              // signal list
-  std::shared_ptr<saif::SaifInstance> tInst; // saif instance pair
+  std::string tStr;                                              // string
+  std::string tVar;                                              // variable
+  mpz_class tNum;                                                // number
+  std::pair<unsigned int, mpz_class> tAct;                       // activity
+  std::shared_ptr<saif::SaifRecord> tRecord;                     // a saif record
+  std::pair<std::string, std::shared_ptr<saif::SaifSignal>> tSig;// signal
+  std::unordered_map<std::string, std::shared_ptr<saif::SaifSignal>>
+    tSigList;                               // signal list
+  std::shared_ptr<saif::SaifInstance> tInst;// saif instance pair
   std::pair<std::string, std::shared_ptr<saif::SaifInstance>>
-      tInstPair; // saif instance pair
-  std::map<std::string, std::shared_ptr<saif::SaifInstance>>
-      tInstList; // saif instance list
+    tInstPair;// saif instance pair
+  std::unordered_map<std::string, std::shared_ptr<saif::SaifInstance>>
+    tInstList;// saif instance list
 };
 
 class SaifLexer {
-public:
+  public:
   SaifLexer(std::istream *);
   int lexer(saif_token_type *);
 
-private:
+  private:
   enum state_t {
     S_BEGIN = 0,
     S_DEF,
@@ -73,14 +73,14 @@ private:
     S_STR
   };
 
-  std::istream *istm; // input stream
+  std::istream *istm;// input stream
   std::string buf;
   std::list<std::pair<unsigned int, unsigned int>> state;
   std::string m_string;
 
-  std::string next_token(); // get the next token
+  std::string next_token();// get the next token
   bool validate_token(const std::string &, saif_token_type *,
-                      int &); // analyse the token
+                      int &);// analyse the token
 
   // helper
   bool token_helper(int, bool, unsigned int, unsigned int, bool, int &, bool);
@@ -88,6 +88,6 @@ private:
 
 std::string signal_name_normalizer(const std::string &);
 std::string signal_name_parser(const std::string &, std::list<int> &);
-} // namespace saif
+}// namespace saif
 
 #endif
